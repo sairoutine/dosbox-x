@@ -138,7 +138,7 @@ static struct {
 # include "midi_timidity.h"
 #endif
 
-#if defined(MACOSX)
+#if 0
 
 #include "midi_coremidi.h"
 #include "midi_coreaudio.h"
@@ -249,7 +249,7 @@ void MIDI_State_SaveMessage()
 					Set Pedals (#64, #65, #66, #67) to 0
 					Set Registered and Non-registered parameter number LSB and MSB (#98-#101) to null value (127)
 					Set pitch bender to center (64/0)
-					Reset channel pressure to 0 
+					Reset channel pressure to 0
 					Reset polyphonic pressure for all notes to 0.
 					*/
 					memset( midi_state[channel].code_a0, 0xff, sizeof(midi_state[channel].code_a0) );
@@ -551,10 +551,10 @@ void MIDI_RawOutByte(Bit8u data) {
 		midi.rt_buf[0]=data;
 		midi.handler->PlayMsg(midi.rt_buf);
 		return;
-	}	 
+	}
 	/* Test for a active sysex tranfer */
 	if (midi.status==0xf0) {
-		if (!(data&0x80)) { 
+		if (!(data&0x80)) {
 			if (midi.sysex.used<(SYSEX_SIZE-1)) midi.sysex.buf[midi.sysex.used++] = data;
 			return;
 		} else {

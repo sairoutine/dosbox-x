@@ -104,7 +104,7 @@ bool sse2_available = false;
 
 void CheckSSESupport()
 {
-#if defined (__GNUC__) || (_MSC_VER)
+#if 0
     Bitu a, b, c, d;
     cpuid(1, a, b, c, d);
     sse2_available = ((d >> 26) & 1)?true:false;
@@ -224,7 +224,7 @@ void                TANDYSOUND_Init(Section*);
 void                DISNEY_Init(Section*);
 void                PS1SOUND_Init(Section*);
 void                INNOVA_Init(Section*);
-void                SERIAL_Init(Section*); 
+void                SERIAL_Init(Section*);
 void                DONGLE_Init(Section*);
 #if C_IPX
 void                IPX_Init(Section*);
@@ -392,14 +392,14 @@ increaseticks:
                                 ratio = (Bit32s)((double)ratio * (1 - ratioremoved));
                                 /* Don't allow very high ratio which can cause us to lock as we don't scale down
                                  * for very low ratios. High ratio might result because of timing resolution */
-                                if (ticksScheduled >= 250 && ticksDone < 10 && ratio > 20480) 
+                                if (ticksScheduled >= 250 && ticksDone < 10 && ratio > 20480)
                                     ratio = 20480;
                                 Bit64s cmax_scaled = (Bit64s)CPU_CycleMax * (Bit64s)ratio;
                                 /* The auto cycle code seems reliable enough to disable the fast cut back code.
                                  * This should improve the fluency of complex games.
-                                 if (ratio <= 1024) 
+                                 if (ratio <= 1024)
                                  new_cmax = (Bit32s)(cmax_scaled / (Bit64s)1024);
-                                 else 
+                                 else
                                  */
                                 new_cmax = (Bit32s)(1 + (CPU_CycleMax >> 1) + cmax_scaled / (Bit64s)2048);
                             }
@@ -415,7 +415,7 @@ increaseticks:
                            ratio,
                            ticksDone,
                            ticksScheduled);
-                           */  
+                           */
                         /* ratios below 1% are considered to be dropouts due to
                            temporary load imbalance, the cycles adjusting is skipped */
                         if (ratio>10) {
@@ -724,7 +724,7 @@ void DOSBOX_RealInit() {
     //       base video of it's own, and then to specify an ISA or PCI card attached to the bus that
     //       provides video.
     std::string mtype(section->Get_string("machine"));
-    svgaCard = SVGA_None; 
+    svgaCard = SVGA_None;
     machine = MCH_VGA;
     int10.vesa_nolfb = false;
     int10.vesa_oldvbe = false;
@@ -868,7 +868,7 @@ void DOSBOX_SetupConfigSections(void) {
 
         0 };
 
-    const char* scalers[] = { 
+    const char* scalers[] = {
         "none", "normal2x", "normal3x", "normal4x", "normal5x",
 #if RENDER_USE_ADVANCED_SCALERS>2
         "advmame2x", "advmame3x", "advinterp2x", "advinterp3x", "hq2x", "hq3x", "2xsai", "super2xsai", "supereagle",
@@ -1624,7 +1624,7 @@ void DOSBOX_SetupConfigSections(void) {
     Pstring->Set_values(cyclest);
 
     Pstring = Pmulti_remain->GetSection()->Add_string("parameters",Property::Changeable::Always,"");
-    
+
     Pint = secprop->Add_int("cycleup",Property::Changeable::Always,10);
     Pint->SetMinMax(1,1000000);
     Pint->Set_help("Amount of cycles to decrease/increase with keycombos.(CTRL-F11/CTRL-F12)");
@@ -1636,7 +1636,7 @@ void DOSBOX_SetupConfigSections(void) {
     Pbool = secprop->Add_bool("use dynamic core with paging on",Property::Changeable::Always,false);
     Pbool->Set_help("Dynamic core is NOT compatible with the way page faults in the guest are handled in DosBox-X.\n"
             "Windows 9x may crash with paging on if dynamic core is enabled. Enable at your own risk.\n");
-            
+
     Pbool = secprop->Add_bool("ignore opcode 63",Property::Changeable::Always,true);
     Pbool->Set_help("When debugging, do not report illegal opcode 0x63.\n"
             "Enable this option to ignore spurious errors while debugging from within Windows 3.1/9x/ME");
@@ -1708,8 +1708,8 @@ void DOSBOX_SetupConfigSections(void) {
             "require such accuracy for correct Tandy/OPL output including digitized speech. This option can also help eliminate minor\n"
             "errors in Gravis Ultrasound emulation that result in random echo/attenuation effects.");
 
-    Pbool = secprop->Add_bool("swapstereo",Property::Changeable::OnlyAtStart,false); 
-    Pbool->Set_help("Swaps the left and right stereo channels."); 
+    Pbool = secprop->Add_bool("swapstereo",Property::Changeable::OnlyAtStart,false);
+    Pbool->Set_help("Swaps the left and right stereo channels.");
 
     Pint = secprop->Add_int("rate",Property::Changeable::OnlyAtStart,44100);
     Pint->Set_values(rates);
@@ -1743,7 +1743,7 @@ void DOSBOX_SetupConfigSections(void) {
     Pint = secprop->Add_int("samplerate",Property::Changeable::WhenIdle,44100);
     Pint->Set_values(rates);
     Pint->Set_help("Sample rate for MIDI synthesizer, if applicable.");
-    
+
     Pint = secprop->Add_int("mpuirq",Property::Changeable::WhenIdle,-1);
     Pint->SetMinMax(-1,15);
     Pint->Set_help("MPU-401 IRQ. -1 to automatically choose.");
@@ -1791,7 +1791,7 @@ void DOSBOX_SetupConfigSections(void) {
 
     Pint = secprop->Add_int("mt32.reverb.time",Property::Changeable::WhenIdle,5);
     Pint->Set_values(mt32reverbTimes);
-    Pint->Set_help("MT-32 reverb decaying time"); 
+    Pint->Set_help("MT-32 reverb decaying time");
 
     Pint = secprop->Add_int("mt32.reverb.level",Property::Changeable::WhenIdle,3);
     Pint->Set_values(mt32reverbLevels);
@@ -1804,7 +1804,7 @@ void DOSBOX_SetupConfigSections(void) {
     secprop=control->AddSection_prop("debug",&Null_Init);
 
     secprop=control->AddSection_prop("sblaster",&Null_Init,true);//done
-    
+
     Pstring = secprop->Add_string("sbtype",Property::Changeable::WhenIdle,"sb16");
     Pstring->Set_values(sbtypes);
     Pstring->Set_help("Type of Soundblaster to emulate. gb is Gameblaster.");
@@ -1914,7 +1914,7 @@ void DOSBOX_SetupConfigSections(void) {
      *        Note it sets Timer 1, then reads port 388h 100 times before reading status to detect whether the
      *        timer "overflowed" (fairly typical Adlib detection code).
      *        Some quick math: 8333333Hz ISA BCLK / 6 cycles per read (3 wait states) = 1388888 reads/second possible
-     *                         100 I/O reads * (1 / 1388888) = 72us */ 
+     *                         100 I/O reads * (1 / 1388888) = 72us */
 
     Pstring = secprop->Add_string("oplemu",Property::Changeable::WhenIdle,"default");
     Pstring->Set_values(oplemus);
@@ -2010,7 +2010,7 @@ void DOSBOX_SetupConfigSections(void) {
             "relies on this behavior for Sound Blaster output and should be enabled for accuracy in emulation.");
 
     secprop=control->AddSection_prop("gus",&Null_Init,true); //done
-    Pbool = secprop->Add_bool("gus",Property::Changeable::WhenIdle,false);  
+    Pbool = secprop->Add_bool("gus",Property::Changeable::WhenIdle,false);
     Pbool->Set_help("Enable the Gravis Ultrasound emulation.");
 
     Pbool = secprop->Add_bool("autoamp",Property::Changeable::WhenIdle,false);
@@ -2083,7 +2083,7 @@ void DOSBOX_SetupConfigSections(void) {
     Pint = secprop->Add_int("gusdma",Property::Changeable::WhenIdle,3);
     Pint->Set_values(dmasgus);
     Pint->Set_help("The DMA channel of the Gravis Ultrasound.");
-    
+
     Pstring = secprop->Add_string("gustype",Property::Changeable::WhenIdle,"classic");
     Pstring->Set_values(gustypes);
     Pstring->Set_help(  "Type of Gravis Ultrasound to emulate.\n"
@@ -2129,11 +2129,11 @@ void DOSBOX_SetupConfigSections(void) {
     Pstring = secprop->Add_string("tandy",Property::Changeable::WhenIdle,"auto");
     Pstring->Set_values(tandys);
     Pstring->Set_help("Enable Tandy Sound System emulation. For 'auto', emulation is present only if machine is set to 'tandy'.");
-    
+
     Pint = secprop->Add_int("tandyrate",Property::Changeable::WhenIdle,44100);
     Pint->Set_values(rates);
     Pint->Set_help("Sample rate of the Tandy 3-Voice generation.");
-    
+
     Pbool = secprop->Add_bool("disney",Property::Changeable::WhenIdle,false);
     Pbool->Set_help("Enable Disney Sound Source emulation. (Covox Voice Master and Speech Thing compatible).");
     Pstring = secprop->Add_string("ps1audio",Property::Changeable::WhenIdle,"off");
@@ -2161,7 +2161,7 @@ void DOSBOX_SetupConfigSections(void) {
 
     Pbool = secprop->Add_bool("autofire",Property::Changeable::WhenIdle,false);
     Pbool->Set_help("continuously fires as long as you keep the button pressed.");
-    
+
     Pbool = secprop->Add_bool("swap34",Property::Changeable::WhenIdle,false);
     Pbool->Set_help("swap the 3rd and the 4th axis. can be useful for certain joysticks.");
 
@@ -2243,7 +2243,7 @@ void DOSBOX_SetupConfigSections(void) {
 
 
     secprop=control->AddSection_prop("serial",&Null_Init,true);
-   
+
     Pmulti_remain = secprop->Add_multiremain("serial1",Property::Changeable::WhenIdle," ");
     Pstring = Pmulti_remain->GetSection()->Add_string("type",Property::Changeable::WhenIdle,"dummy");
     Pmulti_remain->SetValue("dummy",/*init*/true);

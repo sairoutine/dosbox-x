@@ -34,7 +34,7 @@
 #else
 # include "byteorder.h"
 # define _G_DIR_SEPARATOR '/'
-# if !defined(BYTE_ORDER) || !defined(LITTLE_ENDIAN) || !defined(BIG_ENDIAN)
+# if 0
 #  error byteorder not enough information
 # endif
 # if BYTE_ORDER == LITTLE_ENDIAN
@@ -285,12 +285,12 @@ extern NP2CFG pccore;
 #define	NELEMENTS(a)	((int)(sizeof(a) / sizeof(a[0])))
 #endif
 
-#define	_MEM_INIT()				
+#define	_MEM_INIT()
 #define	_MALLOC(a, b)			malloc(a)
 #define	_MFREE(a)				free(a)
-#define	_HANDLE_ADD(a, b)		
-#define	_HANDLE_REM(a)			
-#define	_MEM_USED(a)			
+#define	_HANDLE_ADD(a, b)
+#define	_HANDLE_REM(a)
+#define	_MEM_USED(a)
 
 #ifndef WIN32
 #define CopyMemory(d,s,n)   memcpy((d), (s), (n))

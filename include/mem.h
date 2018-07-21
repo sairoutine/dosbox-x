@@ -60,12 +60,12 @@ bool                        MEM_ReAllocatePages(MemHandle & handle,Bitu pages,bo
 MemHandle                   MEM_NextHandle(MemHandle handle);
 MemHandle                   MEM_NextHandleAt(MemHandle handle,Bitu where);
 
-/* 
+/*
     The folowing six functions are used everywhere in the end so these should be changed for
-    Working on big or little endian machines 
+    Working on big or little endian machines
 */
 
-#if !defined(C_UNALIGNED_MEMORY)
+#if 1
 /* meaning: we're probably being compiled for a processor that doesn't like unaligned WORD access,
             on such processors typecasting memory as uint16_t and higher can cause a fault if the
         address is not aligned to that datatype when we read/write through it. */
