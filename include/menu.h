@@ -107,7 +107,7 @@ void DOSBox_NoMenu(void);
 #define DOSBOXMENU_NSMENU   (2)     /* Mac OS X NSMenu / NSMenuItem resources */
 #define DOSBOXMENU_SDLDRAW  (3)     /* menus that WE draw on the SDL surface */
 
-#if 1 /* Programmer/Dev wants to compile with SDL drawn menus even if host OS offers menus (shrug) Ok */
+#if C_FORCE_MENU_SDLDRAW /* Programmer/Dev wants to compile with SDL drawn menus even if host OS offers menus (shrug) Ok */
 # define DOSBOXMENU_TYPE    DOSBOXMENU_SDLDRAW
 #elif defined(WIN32) && !defined(C_SDL2) && !defined(HX_DOS)
 # define DOSBOXMENU_TYPE    DOSBOXMENU_HMENU
@@ -173,7 +173,7 @@ class DOSBoxMenu {
                 }
         };
     public:
-        static constexpr item_handle_t  unassigned_item_handle = ((item_handle_t)(0xFFFFU));
+        static constexpr item_handle_t  unassigned_item_handle = ((item_handle_t)(0xFFFFU)); 
         static constexpr callback_t     unassigned_callback = NULL;
         static const mapper_event_t     unassigned_mapper_event; /* empty std::string */
     public:
